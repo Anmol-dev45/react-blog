@@ -74,14 +74,6 @@ const PostForm = ({ post }) => {
     return () => subscription.unsubscribe();
   }, [watch, slugTransform, setValue]);
 
-  useEffect(() => {
-    if (post) {
-      setValue("title", post.title || "");
-      setValue("slug", post.$id || "");
-      setValue("content", post.content || "");
-      setValue("status", post.status || "active");
-    }
-  }, [post, setValue]);
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-wrap">
       <div className="w-2/3 px-2">
