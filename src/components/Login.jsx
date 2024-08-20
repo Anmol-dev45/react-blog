@@ -13,18 +13,23 @@ const Login = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
-  const login = async (data) => {
+  const login = (data) => {
     setError("");
-    try {
-      const session = await authService.login(data);
-      if (session) {
-        const userData = await authService.getCurrentUser();
+    authService
+      .login(data)
+      .then((session) => {
+        if (session) {
+          return authService.getCurrentUser();
+        }
+        throw new Error("Login failed");
+      })
+      .then((userData) => {
         if (userData) dispatch(authLogin({ userData }));
         navigate("/");
-      }
-    } catch (error) {
-      setError(error);
-    }
+      })
+      .catch((error) => {
+        setError(error.message || "An error occurred");
+      });
   };
 
   return (

@@ -21,7 +21,7 @@ const Protected = ({ children, authentication = true }) => {
     }
     // Once the check is complete, set loading to false to stop showing the loading message.
     setLoading(false);
-  });
+  }, [authStatus, authentication, navigate]);
 
   // Once the check is complete, render the children components, allowing access to the protected content.
   return loading ? <div>Loading...</div> : <>{children}</>;
